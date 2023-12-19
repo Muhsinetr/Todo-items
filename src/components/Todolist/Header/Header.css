@@ -35,3 +35,10 @@ border: none;
 font-weight: 500;
 border-radius: 5px;
 }
+.danger-input{
+    color: red;
+    font-size: 12px;
+    font-family: monospace;
+    margin-left: 48px;
+    margin-top: -35px;
+}

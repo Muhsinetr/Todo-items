@@ -7,7 +7,10 @@ export const Todolist = () => {
   const [arrayId, setArrayId] = useState(0);
   const [mainArray, setMainArray] = useState([]);
   const [listinputValue, setListinputValue] = useState("");
-
+  const [error,setError] = useState({
+    maininput : false,
+    editinput : false
+  })
 
   ////set data to local storage
   useEffect(() => {
@@ -29,6 +32,7 @@ export const Todolist = () => {
 
   const handleInputValue = (event) => {
     setListinputValue(event.target.value);
+    onBlurHandler(event);
   };
 
   ////To save edited value in array
@@ -96,16 +100,33 @@ export const Todolist = () => {
     setMainArray(statusArray);
     }
 
+    const onBlurHandler =event=>{
+      const errors = {
+        maininput:false,
+        editinput:false
+      }
+      const {name,value}=event.target;
+      if (name === "maininput" && value==="") {
+        errors.maininput = true;
+      }else if(name === "editinput" && value === ""){
+        errors.editinput = true;
+      }
+      setError(errors);
+    }
   return (
     <div className="to-do-list">
       <Header handleInputValue={handleInputValue}
        handleAddbtn={handleAddbtn}
+       onBlurHandler={onBlurHandler}
+       error={error}
        listinputValue={listinputValue} />
       <Content
         mainArray={mainArray}
         handleDelet={handleDelet}
         handleSave={handleSave}
         handleDone={handleDone}
+        onBlurHandler={onBlurHandler}
+        error={error}
       />
     </div>
   );
